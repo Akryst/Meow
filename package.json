@@ -1,0 +1,41 @@
+{
+  "name": "musicbio-template",
+  "version": "1.0.0",
+  "description": "Interactive personal bio page with Last.fm integration, video backgrounds, and particle effects",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "config": "node scripts/generateConfig.js",
+    "serve": "npx live-server public --port=3000 --open=/index.html"
+  },
+  "keywords": [
+    "bio-page",
+    "personal-website",
+    "lastfm-integration",
+    "music-bio",
+    "video-background",
+    "particle-effects",
+    "responsive-design",
+    "developer-portfolio",
+    "customizable-template",
+    "real-time-music",
+    "social-media-links",
+    "personal-branding"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fs-extra": "^11.1.1",
+    "howler": "^2.2.4",
+    "mongoose": "^8.16.5",
+    "particles.js": "^2.0.0",
+    "socket.io": "^4.7.2",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

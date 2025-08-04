@@ -4,7 +4,7 @@
 
 *A modern, customizable personal bio page with dynamic video backgrounds, real-time Last.fm music integration, particle effects, and responsive design.*
 
-**Perfect for developers, creators, and music enthusiasts who want to showcase their personality!** 🐱✨
+**Perfect for developers, and creators who want to showcase their personality!** 🐱✨
 
 ---
 

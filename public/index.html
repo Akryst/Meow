@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio - Interactive Personal Bio Page</title>    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base/styles.css">
+    <link rel="stylesheet" href="css/components/effects.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body class="text-white font-mono">
+    
+    <!-- Last.fm Widget - Top Left Corner -->
+    <div class="fixed top-6 left-6 z-50 hidden lg:block">
+        <div class="lastfm-widget">
+            <div class="flex justify-start items-center mb-2"> 
+                <div class="status-dot mr-2"></div>
+                <span class="text-xs text-gray-400 uppercase tracking-wide"> AKRYST IS LISTENING TO</span>
+            </div>
+            <div class="space-y-1">
+                <div class="text-sm font-medium text-white truncate" id="track-name">
+                    Loading track...
+                </div>
+                <div class="text-xs text-gray-400 truncate" id="artist-name">
+                    Last.fm
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Player - Bottom Left Corner -->
+    <div class="fixed bottom-6 left-6 z-50 hidden lg:block">
+        <div class="music-player-widget">
+            <div class="flex justify-between items-center mb-2"> 
+                <div class="status-dot mr-2"></div>
+                <span class="text-xs text-gray-400 uppercase tracking-wide"> MUSIC PLAYER</span>
+                <button class="toggle-play ml-auto">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+            <div class="visualizer-container">
+                <pre id="ascii-visualizer">♪ ♫ ♪ ♫</pre>
+            </div>
+            <div class="volume-control">
+                <i class="fas fa-volume-down volume-icon"></i>
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="10">
+                <i class="fas fa-volume-up volume-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Overlay -->
+    <div id="background-overlay"></div>
+
+    <!-- Main Container -->
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="max-w-2xl w-full">
+            
+            <!-- Profile Section -->
+            <div class="text-center space-y-8 fade-in">
+                
+                <!-- Profile Image -->
+                <div class="profile-container">
+                    <div class="profile-image-wrapper">
+                        <img 
+                            src="assets/images/profile.jpg" 
+                            alt="Profile"
+                            class="profile-image"
+                        >
+                    </div>
+                </div>
+                
+                <!-- Name and Description -->
+                <div class="space-y-3">
+                    <h2 class="text-xl font-medium text-white" id="profile-name"></h2>
+                    <h1 class="text-l text-gray-300 font-normal tracking-wide" id="profile-description"></h1>
+                    <div class="divider"></div>
+                </div>
+                
+                <!-- Social Icons -->
+                <div class="social-grid">
+                    <a href="#" class="social-icon" data-social="github" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="twitter" aria-label="Twitter/X">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="lastfm" aria-label="Last.fm">
+                        <i class="fab fa-lastfm"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="osu" aria-label="osu!">
+                        <img src="https://img.icons8.com/?size=100&id=zYY_A4miPOdj&format=png&color=ffffff" alt="osu!" style="width:32px;height:32px;display:inline;vertical-align:middle;">
+                    </a>
+                    <a href="#" class="social-icon" data-social="vrchat" aria-label="VRChat">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="tiktok" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="namemc" aria-label="NameMC">
+                        <i class="fas fa-cube"></i>
+                    </a>
+                    <a href="#" class="social-icon" data-social="youtube" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                
+                <!-- Status Panel -->
+                <div class="status-panel">
+                    <div class="status-header">
+                        <span class="text-gray-400 text-xs uppercase tracking-wide">System Status</span>
+                        <div class="status-indicator">
+                            <div class="status-dot active"></div>
+                            <span class="text-xs text-green-400">Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="divider-thin"></div>
+                    
+                    <div class="status-info">
+                        <div class="status-row">
+                            <span class="text-gray-400">Location</span>
+                            <span class="text-white location-text"></span>
+                        </div>
+                        <div class="status-row">
+                            <span class="text-gray-400">Local Time</span>
+                            <span class="text-white" id="current-time"></span>
+                        </div>
+                        <div class="status-row">
+                            <span class="text-gray-400">Mode</span>
+                            <span class="text-white">Active</span>
+                        </div>
+                        <div class="status-row">
+                            <span class="text-gray-400">Visit Count</span>
+                            <span class="text-white" id="visit-count"></span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
+        <div class="text-center">
+            <div class="divider mb-3"></div>
+            <p class="text-gray-500 text-xs font-light">
+                © 2025 • music. connect. [people].
+            </p>
+        </div>
+    </footer>
+
+    <!-- Particles container will be auto-created by effects.js -->
+    
+    <!-- Modular JavaScript - Load modules first, then main -->
+    <script src="js/modules/backgroundManager.js"></script>
+    <script src="js/modules/effects.js"></script>
+    <script src="js/modules/configurator.js"></script>
+    <script src="js/modules/timeUtils.js"></script>
+    <script src="js/modules/musicPlayer.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Other existing scripts -->
+    <script src="js/modules/services.js"></script>
+</body>
+</html>

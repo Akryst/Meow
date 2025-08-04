@@ -1,0 +1,400 @@
+/* Reset and Base Styles */
+:root {
+    /* Theme Variables - will be overridden by ThemeManager */
+    --color-primary: #ffffff;
+    --color-background-image: url('/assets/images/background.jpg');
+    --color-background: #000000;
+    --color-surface: rgba(0, 0, 0, .1);
+    --color-text: #ffffff;
+    --color-text-secondary: #9ca3af;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-dot: #39FF14;
+
+    /* Background */
+    --background-blur: 20px;
+
+    /* Typography */
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease-out;
+    --transition-base: 0.3s ease-out;
+    --transition-slow: 0.5s ease-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-mono);
+    /* Background will be handled dynamically by BackgroundManager */
+    background-color: var(--color-background); /* Fallback color */
+    backdrop-filter: blur(var(--background-blur));
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Background overlay */
+#background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Ajusta la opacidad según sea necesario */
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes blink {
+    0%, 100% { 
+        opacity: 1; 
+    }
+    50% { 
+        opacity: 0; 
+    }
+}
+
+/* Main Content */
+.fade-in {
+    animation: fadeIn var(--transition-slow) forwards;
+}
+
+/* Profile Section */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0; /* Reduced from 2rem since name is no longer inside */
+}
+
+.profile-image-wrapper {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--color-primary);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.profile-image-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter var(--transition-base);
+}
+
+.profile-image-wrapper:hover .profile-image {
+    filter: brightness(1.1);
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.025em;
+}
+
+/* Dividers */
+.divider {
+    width: 40px;
+    height: 2px;
+    margin: 0.75rem auto;
+    background-color: #ffffff;
+}
+
+.divider-thin {
+    width: 100%;
+    height: 1px;
+    margin: 0.5rem 0;
+    background-color: var(--color-border);
+}
+
+/* Social Icons */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    justify-items: center;
+    justify-content: center;
+}
+
+/* Dynamic social grid based on number of icons */
+.social-grid.icons-1 { grid-template-columns: repeat(1, 1fr); max-width: 60px; }
+.social-grid.icons-2 { grid-template-columns: repeat(2, 1fr); max-width: 140px; }
+.social-grid.icons-3 { grid-template-columns: repeat(3, 1fr); max-width: 200px; }
+.social-grid.icons-4 { grid-template-columns: repeat(4, 1fr); max-width: 280px; }
+.social-grid.icons-5 { grid-template-columns: repeat(5, 1fr); max-width: 350px; }
+
+@media (max-width: 480px) {
+    .social-grid {
+        grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+        gap: 0.5rem;
+        max-width: 300px;
+        margin: 0 auto 2rem;
+        padding: 0 1rem;
+    }
+    
+    /* En móviles, máximo 3 columnas */
+    .social-grid.icons-4, 
+    .social-grid.icons-5,
+    .social-grid.icons-6,
+    .social-grid.icons-7,
+    .social-grid.icons-8,
+    .social-grid.icons-9 { 
+        grid-template-columns: repeat(3, 1fr); 
+        max-width: 180px; 
+    }
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    font-size: 1.25rem;
+    transition: all var(--transition-base);
+}
+
+.social-icon:hover, .social-icon.icon-hover {
+    background: var(--color-primary);
+    color: var(--color-background);
+    transform: translateY(-5px);
+    
+}
+
+/* Status Panel */
+.status-panel {
+    background: var(--color-surface); 
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 1rem; 
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.status-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-dot);
+}
+
+.status-dot.active {
+    background-color: var(--color-dot);
+    box-shadow: 0 0 8px var(--color-dot);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-info {
+    margin-top: 0.5rem;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    padding: 0.375rem 0;
+}
+
+/* Last.fm Widget */
+.lastfm-widget {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    width: 220px;
+    transition: all var(--transition-base);
+}
+
+.lastfm-widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.lastfm-widget #track-name,
+.lastfm-widget #artist-name {
+    transition: opacity 0.3s ease;
+}
+
+/* Music Player Widget */
+.music-player-widget {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    width: 220px;
+    transition: all var(--transition-base);
+}
+
+.music-player-widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Click Effect */
+.element-click {
+    transform: scale(0.96);
+}
+
+/* Error Message */
+.error-message {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ef4444;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn var(--transition-base) forwards;
+}
+
+/* Music Visualizer */
+#ascii-visualizer {
+    display: block;
+    white-space: pre;
+    font-family: monospace;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.1;
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    transition: all var(--transition-base);
+}
+
+.visualizer-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin: 0.75rem 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: all var(--transition-base) ease-in-out;
+}
+
+.music-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+}
+
+/* Volume Control */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.volume-slider {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-border);
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 2px solid var(--color-background);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: 2px solid var(--color-background);
+}
+
+.volume-icon {
+    color: var(--color-text);
+    font-size: 0.75rem;
+    width: 16px;
+    text-align: center;
+}
