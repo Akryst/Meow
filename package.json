@@ -1,7 +1,7 @@
 {
-  "name": "musicbio-template",
+  "name": "interactive-bio-page",
   "version": "1.0.0",
-  "description": "Interactive personal bio page with Last.fm integration, video backgrounds, and particle effects",
+  "description": "Interactive personal bio page with welcome screen, Last.fm integration, configurable widgets, and professional UI",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
