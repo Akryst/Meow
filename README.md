@@ -2,14 +2,7 @@
 
 # 🎵 Meow! - Interactive Personal Bio Page Template
 
-*A modern, cu```
-musicbio-template/
-├── 📄 .env                    # 🔧 Your personal configuration (not in git)
-├── 📄 .env.example           # 📋 Configuration template
-├── 📄 .gitignore             # 🚫 Files to ignore in git
-├── 📄 package.json           # 📦 Project dependencies
-├── 📄 index.js               # 🚀 Main server file
-├── 📄 dev.js                 # 🛠️ Development helper scriptable personal bio page with dynamic video backgrounds, real-time Last.fm music integration, particle effects, and responsive design.*
+*A modern, customizable personal bio page with dynamic video backgrounds, real-time Last.fm music integration, particle effects, and responsive design.*
 
 **Perfect for developers, and creators who want to showcase their personality!** 🐱✨
 
@@ -434,7 +427,7 @@ git remote add origin https://github.com/yourusername/your-repo.git
 git push -u origin main
 ```
 
-## �🛠️ Troubleshooting
+## ��️ Troubleshooting
 
 <div align="center">
 
