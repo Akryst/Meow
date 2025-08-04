@@ -2,6 +2,8 @@
 
 # Meow! - Interactive Personal Bio Page Template
 
+![Preview](image.png)
+
 *A modern, customizable personal bio page with dynamic video backgrounds, real-time Last.fm music integration, particle effects, and responsive design.*
 
 **Perfect for developers, and creators who want to showcase their personality!** 🐱✨
