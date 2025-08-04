@@ -534,7 +534,7 @@ We welcome contributions with open arms! Here's how you can help:
 
 <br>
 
-**Made with 💖 by the Meow! community** 🐱
+**Made with 💖 by Akryst (and a little bit of IA)** 🐱
 
 [⭐ Star this repo](https://github.com/Akryst/Meow-) • [🐛 Report Issues](https://github.com/Akryst/Meow-/issues) • [💡 Suggest Features](https://github.com/Akryst/Meow-/discussions)
 
