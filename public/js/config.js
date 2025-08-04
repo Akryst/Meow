@@ -5,15 +5,15 @@ const config = {
     "profile": {
         "name": "Akryst",
         "description": "VR Enthusiast • Music Lover • Avatar editor",
-        "timezone": "America/Hermosillo",
+        "timezone": "America/Phoenix",
         "profileImage": "assets/images/profile.jpg"
     },
     "socialMedia": {
-        "twitter": "https://x.com/AkrystVRC",
-        "lastfm": "https://www.last.fm/user/AkrystVRC",
-        "github": "https://github.com/Akryst",
-        "osu": "https://osu.ppy.sh/users/38184678",
-        "vrchat": "https://vrchat.com/home/user/usr_3644022f-4da6-4438-973a-0eb31527a121"
+        "twitter": "https://x.com/username",
+        "lastfm": "https://www.last.fm/user/username",
+        "github": "https://github.com/username",
+        "osu": "https://osu.ppy.sh/users/usernameid",
+        "vrchat": "https://vrchat.com/home/user/username"
     },
     "locations": {
         "enabled": false,
@@ -26,8 +26,8 @@ const config = {
         ]
     },
     "lastfm": {
-        "username": "akrystvrc",
-        "apiKey": "97cee68c6a28040c6269fa02dc86a948"
+        "username": "your_lastfm_username",
+        "apiKey": "your_lastfm_key"
     },
     "database": {
         "enabled": false
