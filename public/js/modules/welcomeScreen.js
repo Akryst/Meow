@@ -117,7 +117,6 @@ class WelcomeScreen {
 document.addEventListener('DOMContentLoaded', () => {
     if (WelcomeScreen.shouldShow()) {
         new WelcomeScreen();
-        WelcomeScreen.markAsVisited();
     }
 });
 
