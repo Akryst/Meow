@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎵 Meow! - Interactive Personal Bio Page Template
+# Meow! - Interactive Personal Bio Page Template
 
 *A modern, customizable personal bio page with dynamic video backgrounds, real-time Last.fm music integration, particle effects, and responsive design.*
 
