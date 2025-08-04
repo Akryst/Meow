@@ -15,6 +15,17 @@ function initializeApp() {
     // Initialize all modules
     TimeUtils.initTimeDisplay();
     MusicPlayer.initMusicPlayer();
+    loadFooterConfig();
     
     console.log('Loaded');
+}
+
+// Load footer configuration
+function loadFooterConfig() {
+    if (window.siteConfig && window.siteConfig.footer) {
+        const footerElement = document.querySelector('footer p');
+        if (footerElement) {
+            footerElement.innerHTML = window.siteConfig.footer.text;
+        }
+    }
 }

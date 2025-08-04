@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/base/styles.css">
     <link rel="stylesheet" href="css/components/effects.css">
+    <link rel="stylesheet" href="css/components/welcome.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
@@ -63,8 +64,10 @@
     <!-- Background Overlay -->
     <div id="background-overlay"></div>
 
-    <!-- Main Container -->
-    <div class="min-h-screen flex items-center justify-center p-6">
+    <!-- Main Content Container -->
+    <div id="main-content">
+        <!-- Main Container -->
+        <div class="min-h-screen flex items-center justify-center p-6">
         <div class="max-w-2xl w-full">
             
             <!-- Profile Section -->
@@ -155,6 +158,7 @@
             
         </div>
     </div>
+    </div>
 
     <!-- Footer -->
     <footer class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
@@ -169,6 +173,7 @@
     <!-- Particles container will be auto-created by effects.js -->
     
     <!-- Modular JavaScript - Load modules first, then main -->
+    <script src="js/modules/welcomeScreen.js"></script>
     <script src="js/modules/backgroundManager.js"></script>
     <script src="js/modules/effects.js"></script>
     <script src="js/modules/configurator.js"></script>

@@ -1,5 +1,5 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-04T21:07:49.329Z
+// Last updated: 2025-08-04T23:09:51.941Z
 
 const config = {
     "profile": {
@@ -62,6 +62,13 @@ const config = {
             "Midnight Rooftop"
         ],
         "locationInterval": 10000
+    },
+    "welcomeScreen": {
+        "enabled": true,
+        "text": "Hey! Been trying to meet you."
+    },
+    "footer": {
+        "text": "Made with ❤️ by Akryst"
     }
 };
 

@@ -122,6 +122,13 @@ function generateConfigFile(env) {
         personal: {
             locations: env.LOCATIONS || ['Location 1', 'Location 2'],
             locationInterval: env.LOCATION_INTERVAL || 5000
+        },
+        welcomeScreen: {
+            enabled: env.WELCOME_SCREEN_ENABLED !== undefined ? env.WELCOME_SCREEN_ENABLED : true,
+            text: env.WELCOME_TEXT || 'Click here to continue'
+        },
+        footer: {
+            text: env.FOOTER || '© 2025 • music. connect. [people].'
         }
     };
     

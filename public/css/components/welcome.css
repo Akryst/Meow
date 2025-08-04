@@ -1,0 +1,131 @@
+/* Welcome Screen Styles */
+.welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    cursor: pointer;
+}
+
+/* Hide scrollbars when welcome screen is active */
+body.welcome-active {
+    overflow: hidden;
+    height: 100vh;
+}
+
+body:not(.welcome-active) {
+    overflow: auto;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 20px;
+    transition: transform 0.3s ease-out;
+    max-width: 400px;
+    width: 90%;
+}
+
+.welcome-content:hover {
+    transform: scale(1.02);
+}
+
+.welcome-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.5s ease-out;
+}
+
+.welcome-button:hover::before {
+    left: 100%;
+}
+
+.welcome-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive design for welcome screen */
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: 2rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+    
+    .welcome-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .welcome-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}
+
+/* Enhanced blur effect when welcome screen is active */
+body.welcome-active {
+    overflow: hidden;
+}
+
+/* Blur effect for main content when welcome screen is active */
+body.welcome-active #main-content {
+    filter: blur(10px);
+    transition: filter 0.5s ease-out;
+}
+
+body:not(.welcome-active) #main-content {
+    filter: blur(0px);
+    transition: filter 0.5s ease-out;
+}
+
+/* Additional blur effect for any elements outside main-content */
+body.welcome-active > *:not(.welcome-screen) {
+    filter: blur(8px);
+    transition: filter 0.5s ease-out;
+}
+
+body:not(.welcome-active) > *:not(.welcome-screen) {
+    filter: none;
+    transition: filter 0.5s ease-out;
+}
