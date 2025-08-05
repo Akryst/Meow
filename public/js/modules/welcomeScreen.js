@@ -15,7 +15,6 @@ class WelcomeScreen {
     init() {
         this.createWelcomeScreen();
         
-        // Add welcome-active class to body
         document.body.classList.add('welcome-active');
     }
 
@@ -27,7 +26,6 @@ class WelcomeScreen {
         const welcomeContent = document.createElement('div');
         welcomeContent.className = 'welcome-content';
 
-        // Get welcome text from config
         const welcomeText = window.siteConfig?.welcomeScreen?.text || 'Click here to continue';
 
         welcomeContent.innerHTML = `
@@ -41,7 +39,6 @@ class WelcomeScreen {
 
         this.mainContent = document.getElementById('main-content') || document.body;
 
-        // Simple click event listener
         this.welcomeElement.addEventListener('click', () => {
             this.enterSite();
         });
@@ -59,37 +56,28 @@ class WelcomeScreen {
             button.style.opacity = '0.7';
         }
 
-        // Remove welcome-active class immediately to start blur removal
         document.body.classList.remove('welcome-active');
 
         // Fade out welcome screen
         this.welcomeElement.classList.add('hidden');
 
-        // Remove the element after the CSS transition completes
         setTimeout(() => {
             if (this.welcomeElement && this.welcomeElement.parentNode) {
                 this.welcomeElement.parentNode.removeChild(this.welcomeElement);
             }
             
-            // Dispatch custom event for other modules
             document.dispatchEvent(new CustomEvent('welcomeScreenDismissed'));
-            
-            // Focus main content for accessibility
             if (this.mainContent) {
                 this.mainContent.focus();
             }
-        }, 300); // This matches the CSS transition time
-
-        // Analytics or tracking (if needed)
+        }, 300);
         this.trackEntry();
     }
 
     trackEntry() {
-        // Log entry for analytics
         console.log('User entered the site via welcome screen');
     }
 
-    // Method to show welcome screen again (if needed)
     show() {
         if (!this.isVisible && this.welcomeElement) {
             this.isVisible = true;
@@ -98,27 +86,21 @@ class WelcomeScreen {
         }
     }
 
-    // Method to force hide welcome screen
     hide() {
         if (this.isVisible) {
             this.enterSite();
         }
     }
 
-    // Check if welcome screen should be shown (e.g., first visit)
     static shouldShow() {
-        // Check if welcome screen is enabled in config
         const enabled = window.siteConfig?.welcomeScreen?.enabled;
-        return enabled !== false; // Default to true if not specified
+        return enabled !== false;
     }
 }
 
-// Initialize welcome screen when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     if (WelcomeScreen.shouldShow()) {
         new WelcomeScreen();
     }
 });
-
-// Export for potential external use
 window.WelcomeScreen = WelcomeScreen;

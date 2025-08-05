@@ -13,7 +13,6 @@ function initMusicPlayer() {
     const volumeSlider = document.getElementById('volume-slider');
     let isPlaying = false;
 
-    // Function to load and play a song
     function loadAndPlaySong(songIndex) {
         if (sound) {
             sound.stop();
@@ -31,7 +30,6 @@ function initMusicPlayer() {
         if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-pause"></i>';
     }
 
-    // Function to play the next random song
     function playNextSong() {
         let nextIndex;
         do {

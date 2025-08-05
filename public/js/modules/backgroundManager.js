@@ -13,7 +13,6 @@ class BackgroundManager {
     }
     
     init() {
-        // Remove existing background from body
         document.body.style.backgroundImage = 'none';
         
         if (this.backgroundType === 'video') {
@@ -22,23 +21,20 @@ class BackgroundManager {
             this.setupImageBackground();
         }
         
-        console.log(`🎨 Background initialized: ${this.backgroundType}`);
+        console.log(`Background initialized: ${this.backgroundType}`);
     }
     
     setupVideoBackground() {
-        // Create video element
         this.videoElement = document.createElement('video');
         this.videoElement.id = 'bg-video';
         this.videoElement.autoplay = true;
-        this.videoElement.muted = true; // Always muted for background videos
+        this.videoElement.muted = true;
         this.videoElement.loop = true;
-        this.videoElement.playsInline = true; // For mobile compatibility
+        this.videoElement.playsInline = true;
         
-        // Set video source
         const videoSrc = this.config.theme.background.video || 'assets/videos/background.mp4';
         this.videoElement.src = videoSrc;
         
-        // Apply styles
         Object.assign(this.videoElement.style, {
             position: 'fixed',
             top: '0',
@@ -50,31 +46,24 @@ class BackgroundManager {
             pointerEvents: 'none'
         });
         
-        // Create fallback image element
         this.createFallbackBackground();
         
-        // Handle video load errors
         this.videoElement.onerror = () => {
-            console.warn('🎬 Video background failed to load, falling back to image');
+            console.warn('Video background failed to load, falling back to image');
             this.fallbackToImage();
         };
         
-        // Ensure video plays
         this.videoElement.oncanplay = () => {
             this.videoElement.play().catch(error => {
-                console.warn('🎬 Video autoplay blocked, falling back to image');
+                console.warn('Video autoplay blocked, falling back to image');
                 this.fallbackToImage();
             });
         };
         
-        // Insert video into DOM
         document.body.insertBefore(this.videoElement, document.body.firstChild);
-        
-        console.log('🎬 Video background setup completed');
     }
     
     setupImageBackground() {
-        // Create image background element
         const imageElement = document.createElement('div');
         imageElement.id = 'bg-image';
         
@@ -97,7 +86,7 @@ class BackgroundManager {
         
         document.body.insertBefore(imageElement, document.body.firstChild);
         
-        console.log('🖼️ Image background setup completed');
+        console.log('Image background setup completed');
     }
     
     createFallbackBackground() {
@@ -135,31 +124,25 @@ class BackgroundManager {
         }
     }
     
-    // Method to switch background type dynamically
     switchBackgroundType(newType) {
-        // Clean up existing background
         this.cleanup();
         
-        // Update config and reinitialize
         this.backgroundType = newType;
         this.config.theme.background.type = newType;
         this.init();
     }
     
     cleanup() {
-        // Remove video element
         if (this.videoElement) {
             this.videoElement.remove();
             this.videoElement = null;
         }
         
-        // Remove fallback element
         if (this.fallbackElement) {
             this.fallbackElement.remove();
             this.fallbackElement = null;
         }
         
-        // Remove image background
         const imageElement = document.getElementById('bg-image');
         if (imageElement) {
             imageElement.remove();
@@ -167,5 +150,4 @@ class BackgroundManager {
     }
 }
 
-// Make BackgroundManager available globally
 window.BackgroundManager = BackgroundManager;
