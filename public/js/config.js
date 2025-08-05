@@ -27,7 +27,7 @@ const config = {
     },
     "lastfm": {
         "username": "akrystvrc",
-        "apiKey": "97cee68c6a28040c6269fa02dc86a948"
+        "apiKey": "LastFM_API_Key"
     },
     "database": {
         "enabled": false
