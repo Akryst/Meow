@@ -73,7 +73,7 @@
 ```bash
 # 1️⃣ Clone the repository
 git clone <repository-url>
-cd musicbio-template
+cd Meow
 
 # 2️⃣ Install dependencies
 npm install
@@ -98,7 +98,7 @@ npm start
 <summary><b>🗂️ Click to explore the project structure</b></summary>
 
 ```
-musicbio-template/
+Meow/
 ├── 📄 .env                    # 🔧 Your personal configuration
 ├── 📄 package.json           # 📦 Project dependencies
 ├── 📄 index.js               # 🚀 Main server file
@@ -368,6 +368,35 @@ DATABASE_NAME=yourdatabase                         # 📝 Database name
 1. **Set environment variables** on your hosting platform
 2. **Deploy the entire project**
 3. **Ensure MongoDB is configured** if using visit tracking
+
+### PM2 Deployment (Production Server)
+
+<div align="center">
+
+**Keep your bio page running 24/7 with PM2!** 🚀
+
+</div>
+
+1. **Install PM2 globally**:
+   ```bash
+   npm install -g pm2
+   ```
+
+2. **Start your application**:
+   ```bash
+   pm2 start index.js --name bio-page
+   ```
+
+3. **Useful PM2 commands**:
+   ```bash
+   pm2 stop bio-page        # Stop the application
+   pm2 restart bio-page     # Restart the application
+   pm2 delete bio-page      # Remove from PM2
+   pm2 logs bio-page        # View logs
+   pm2 status               # Check status of all apps
+   pm2 save                 # Save current PM2 list
+   pm2 startup              # Setup PM2 to start on boot
+   ```
 
 ## � Security & Git Best Practices
 
