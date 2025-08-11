@@ -1,9 +1,9 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-04T23:09:51.941Z
+// Last updated: 2025-08-11T17:16:33.335Z
 
 const config = {
     "profile": {
-        "name": "Akryst",
+        "name": "Europhic",
         "description": "VR Enthusiast • Music Lover • Avatar editor",
         "timezone": "America/Hermosillo",
         "profileImage": "assets/images/profile.jpg"
@@ -13,7 +13,8 @@ const config = {
         "lastfm": "https://www.last.fm/user/AkrystVRC",
         "github": "https://github.com/Akryst",
         "osu": "https://osu.ppy.sh/users/38184678",
-        "vrchat": "https://vrchat.com/home/user/usr_3644022f-4da6-4438-973a-0eb31527a121"
+        "vrchat": "https://vrchat.com/home/user/usr_3644022f-4da6-4438-973a-0eb31527a121",
+        "steam": "https://steamcommunity.com/id/Akryst"
     },
     "locations": {
         "enabled": false,
@@ -27,7 +28,7 @@ const config = {
     },
     "lastfm": {
         "username": "akrystvrc",
-        "apiKey": "LastFM_API_Key"
+        "apiKey": "97cee68c6a28040c6269fa02dc86a948"
     },
     "database": {
         "enabled": false
@@ -68,7 +69,7 @@ const config = {
         "text": "Hey! Been trying to meet you."
     },
     "footer": {
-        "text": "Made with ❤️ by Akryst"
+        "text": "Made with ❤️ by Europhic"
     }
 };
 

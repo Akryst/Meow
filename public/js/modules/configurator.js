@@ -72,7 +72,13 @@ function setupProfile(profile) {
     }
     
     // Update page title
-    document.title = profile.name;
+    document.title = `${profile.name} - Bio`;
+    
+    // Update Last.fm widget text
+    const lastfmWidget = document.querySelector('.lastfm-widget .text-xs.text-gray-400.uppercase.tracking-wide');
+    if (lastfmWidget) {
+        lastfmWidget.textContent = `${profile.name.toUpperCase()} IS LISTENING TO`;
+    }
 }
 
 function setupSocialLinks(socialMedia) {

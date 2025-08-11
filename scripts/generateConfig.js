@@ -80,6 +80,7 @@ function generateConfigFile(env) {
             github: env.GITHUB || '',
             osu: env.OSU || '',
             vrchat: env.VRCHAT || '',
+            steam: env.STEAM || '',
             instagram: env.INSTAGRAM || '',
             tiktok: env.TIKTOK || '',
             namemc: env.NAMEMC || '',
