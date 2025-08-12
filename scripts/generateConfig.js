@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// Function to read and parse the .env file
+
 function parseEnvFile(filePath) {
     try {
         const envContent = fs.readFileSync(filePath, 'utf8');
@@ -13,27 +13,30 @@ function parseEnvFile(filePath) {
                 const [key, ...valueParts] = line.split('=');
                 let value = valueParts.join('=').trim();
                 
-                // Remove quotes if they exist
+
                 if ((value.startsWith('"') && value.endsWith('"')) || 
                     (value.startsWith("'") && value.endsWith("'"))) {
                     value = value.slice(1, -1);
                 }
                 
-                // Parse JSON arrays
+
                 if (value.startsWith('[') && value.endsWith(']')) {
                     try {
                         value = JSON.parse(value);
                     } catch (e) {
-                        // If parsing fails, keep as string
+
                     }
                 }
                 
-                // Convert boolean values
+
                 if (value === 'true') value = true;
                 if (value === 'false') value = false;
                 
-                // Convert numbers (but not if it's already a boolean)
-                if (typeof value !== 'boolean' && !isNaN(value) && value !== '') {
+
+                if (typeof value !== 'boolean' && 
+                    !isNaN(value) && 
+                    value !== '' && 
+                    key !== 'DISCORD_USER_ID') { // Keep Discord ID as string
                     const num = Number(value);
                     if (Number.isInteger(num)) value = num;
                 }
@@ -49,14 +52,14 @@ function parseEnvFile(filePath) {
     }
 }
 
-// Function to generate the config.js file
+
 function generateConfigFile(env) {
-    // Function to filter active social media platforms
+
     const filterSocialMedia = (socialUrls) => {
         const filtered = {};
         Object.keys(socialUrls).forEach(key => {
             const value = socialUrls[key];
-            // Only include if not empty, not "off" and is a valid URL
+
             if (value && 
                 value.toLowerCase() !== 'off' && 
                 value !== '' && 
@@ -92,8 +95,22 @@ function generateConfigFile(env) {
             list: env.LOCATIONS || ['Location 1', 'Location 2']
         },
         lastfm: {
+            enabled: env.LASTFM_ENABLED !== undefined ? env.LASTFM_ENABLED : true,
             username: env.LASTFM_USERNAME || '',
             apiKey: env.LASTFM_API_KEY || ''
+        },
+        discord: {
+            enabled: env.DISCORD_ENABLED !== undefined ? env.DISCORD_ENABLED : true,
+            userId: env.DISCORD_USER_ID || '', // Keep as string to preserve large numbers
+            updateInterval: parseInt(env.DISCORD_UPDATE_INTERVAL) || 15000,
+            useWebSocket: env.DISCORD_USE_WEBSOCKET !== undefined ? JSON.parse(env.DISCORD_USE_WEBSOCKET) : true,
+            showBadges: env.DISCORD_SHOW_BADGES !== undefined ? env.DISCORD_SHOW_BADGES : true
+        },
+        musicPlayer: {
+            enabled: env.MUSIC_PLAYER_ENABLED !== undefined ? env.MUSIC_PLAYER_ENABLED : true,
+            volume: parseInt(env.MUSIC_PLAYER_VOLUME) || 10,
+            autoplay: env.MUSIC_PLAYER_AUTOPLAY !== undefined ? env.MUSIC_PLAYER_AUTOPLAY : false,
+            tracks: env.MUSIC_PLAYER_TRACKS || ['assets/songs/Song1.mp3', 'assets/songs/Song2.mp3']
         },
         database: {
             enabled: env.MONGO_ENABLED || false
@@ -128,6 +145,10 @@ function generateConfigFile(env) {
             enabled: env.WELCOME_SCREEN_ENABLED !== undefined ? env.WELCOME_SCREEN_ENABLED : true,
             text: env.WELCOME_TEXT || 'Click here to continue'
         },
+        font: {
+            family: env.FONT_FAMILY || 'JetBrains Mono',
+            weights: env.FONT_WEIGHTS || '300;400;500;600;700'
+        },
         footer: {
             text: env.FOOTER || '© 2025 • music. connect. [people].'
         }
@@ -136,7 +157,13 @@ function generateConfigFile(env) {
     const configContent = `// Site configuration - Auto-generated from .env file
 // Last updated: ${new Date().toISOString()}
 
-const config = ${JSON.stringify(config, null, 4)};
+const config = ${JSON.stringify(config, (key, value) => {
+
+    if (key === 'userId' && typeof value === 'string' && value.length > 15) {
+        return value;
+    }
+    return value;
+}, 4)};
 
 // Make available globally
 window.siteConfig = config;
@@ -146,7 +173,7 @@ console.log('🔧 Configuration loaded:', config);`;
     return configContent;
 }
 
-// Main script
+
 function main() {
     const envPath = path.join(__dirname, '..', '.env');
     const configPath = path.join(__dirname, '..', 'public', 'js', 'config.js');
@@ -157,20 +184,20 @@ function main() {
     console.log('Generating config.js...');
     const configContent = generateConfigFile(env);
     
-    // Create directory if it doesn't exist
+
     const configDir = path.dirname(configPath);
     if (!fs.existsSync(configDir)) {
         fs.mkdirSync(configDir, { recursive: true });
     }
     
-    // Write config.js file
+
     fs.writeFileSync(configPath, configContent, 'utf8');
     
     console.log('config.js file generated successfully!');
     console.log('Location:', configPath);
 }
 
-// Execute if called directly
+
 if (require.main === module) {
     main();
 }

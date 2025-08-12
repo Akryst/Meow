@@ -49,7 +49,7 @@ class WelcomeScreen {
 
         this.isVisible = false;
 
-        // Add visual feedback
+
         const button = this.welcomeElement.querySelector('#enter-button');
         if (button) {
             button.style.transform = 'scale(0.95)';
@@ -58,7 +58,7 @@ class WelcomeScreen {
 
         document.body.classList.remove('welcome-active');
 
-        // Fade out welcome screen
+
         this.welcomeElement.classList.add('hidden');
 
         setTimeout(() => {
@@ -72,10 +72,6 @@ class WelcomeScreen {
             }
         }, 300);
         this.trackEntry();
-    }
-
-    trackEntry() {
-        console.log('User entered the site via welcome screen');
     }
 
     show() {

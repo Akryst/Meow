@@ -3,15 +3,23 @@
  * Handles audio playback with random song selection
  */
 
-function initMusicPlayer() {
-    // Songs list
-    const songs = ['assets/songs/Song1.mp3', 'assets/songs/Song2.mp3'];
+function initMusicPlayer(config = {}) {
+
+    const songs = config.tracks || ['assets/songs/Song1.mp3', 'assets/songs/Song2.mp3'];
+    const defaultVolume = config.volume || 10;
+    const autoplay = config.autoplay !== undefined ? config.autoplay : false;
+    
     let currentSongIndex = Math.floor(Math.random() * songs.length);
     let sound = null;
 
     const toggleBtn = document.querySelector('.toggle-play');
     const volumeSlider = document.getElementById('volume-slider');
     let isPlaying = false;
+
+
+    if (volumeSlider) {
+        volumeSlider.value = defaultVolume;
+    }
 
     function loadAndPlaySong(songIndex) {
         if (sound) {
@@ -21,8 +29,11 @@ function initMusicPlayer() {
 
         sound = new Howl({
             src: [songs[songIndex]],
-            volume: volumeSlider ? volumeSlider.value / 100 : 0.1,
-            onend: playNextSong
+            volume: volumeSlider ? volumeSlider.value / 100 : defaultVolume / 100,
+            onend: playNextSong,
+            onloaderror: function(id, error) {
+                playNextSong(); // Skip to next song if current fails
+            }
         });
 
         sound.play();
@@ -40,7 +51,6 @@ function initMusicPlayer() {
         loadAndPlaySong(currentSongIndex);
     }
 
-    // Volume control
     if (volumeSlider) {
         volumeSlider.addEventListener('input', (e) => {
             const volume = e.target.value / 100;
@@ -48,7 +58,6 @@ function initMusicPlayer() {
         });
     }
 
-    // pause and play toggle
     if (toggleBtn) {
         toggleBtn.onclick = () => {
             if (!sound) {
@@ -68,9 +77,14 @@ function initMusicPlayer() {
         };
     }
 
-    // Start playing the first song
-    loadAndPlaySong(currentSongIndex);
+
+    if (autoplay) {
+
+        setTimeout(() => {
+            loadAndPlaySong(currentSongIndex);
+        }, 1000);
+    }
 }
 
-// Export the module for global use
+
 window.MusicPlayer = { initMusicPlayer };

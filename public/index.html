@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio - Interactive Personal Bio Page</title>    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/base/styles.css">
     <link rel="stylesheet" href="css/components/effects.css">
     <link rel="stylesheet" href="css/components/welcome.css">
@@ -50,9 +48,6 @@
                     <i class="fas fa-play"></i>
                 </button>
             </div>
-            <div class="visualizer-container">
-                <pre id="ascii-visualizer">♪ ♫ ♪ ♫</pre>
-            </div>
             <div class="volume-control">
                 <i class="fas fa-volume-down volume-icon"></i>
                 <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="10">
@@ -73,7 +68,7 @@
             <!-- Profile Section -->
             <div class="text-center space-y-8 fade-in">
                 
-                <!-- Profile Image -->
+                <!-- Profile Section -->
                 <div class="profile-container">
                     <div class="profile-image-wrapper">
                         <img 
@@ -82,14 +77,14 @@
                             class="profile-image"
                         >
                     </div>
+                    <div class="profile-info">
+                        <h2 class="text-xl font-medium text-white" id="profile-name"></h2>
+                        <h1 class="text-l text-gray-300 font-normal tracking-wide" id="profile-description"></h1>
+                    </div>
                 </div>
                 
-                <!-- Name and Description -->
-                <div class="space-y-3">
-                    <h2 class="text-xl font-medium text-white" id="profile-name"></h2>
-                    <h1 class="text-l text-gray-300 font-normal tracking-wide" id="profile-description"></h1>
-                    <div class="divider"></div>
-                </div>
+                <!-- Divider after profile -->
+                <div class="divider"></div>
                 
                 <!-- Social Icons -->
                 <div class="social-grid">
@@ -130,8 +125,8 @@
                     <div class="status-header">
                         <span class="text-gray-400 text-xs uppercase tracking-wide">System Status</span>
                         <div class="status-indicator">
-                            <div class="status-dot active"></div>
-                            <span class="text-xs text-green-400">Online</span>
+                            <div class="status-dot active" id="discord-status-dot"></div>
+                            <span class="text-xs text-green-400" id="discord-status-text">Loading...</span>
                         </div>
                     </div>
                     
@@ -145,14 +140,6 @@
                         <div class="status-row">
                             <span class="text-gray-400">Local Time</span>
                             <span class="text-white" id="current-time"></span>
-                        </div>
-                        <div class="status-row">
-                            <span class="text-gray-400">Mode</span>
-                            <span class="text-white">Active</span>
-                        </div>
-                        <div class="status-row">
-                            <span class="text-gray-400">Visit Count</span>
-                            <span class="text-white" id="visit-count"></span>
                         </div>
                     </div>
                 </div>
@@ -172,13 +159,13 @@
             </p>
         </div>
     </footer>
-
-    <!-- Particles container will be auto-created by effects.js -->
     
     <!-- Modular JavaScript - Load modules first, then main -->
+    <script src="js/modules/fontManager.js"></script>
     <script src="js/modules/welcomeScreen.js"></script>
     <script src="js/modules/backgroundManager.js"></script>
     <script src="js/modules/effects.js"></script>
+    <script src="js/modules/discordWidget.js"></script>
     <script src="js/modules/configurator.js"></script>
     <script src="js/modules/timeUtils.js"></script>
     <script src="js/modules/musicPlayer.js"></script>

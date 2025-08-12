@@ -115,3 +115,5 @@ backups/
 public/assets/images/profile.jpg
 public/assets/videos/background.mp4
 public/assets/songs/*.mp3
+examples/
+backups/

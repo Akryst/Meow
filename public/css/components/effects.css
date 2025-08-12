@@ -9,6 +9,156 @@
     --bloom-color: var(--color-primary);
 }
 
+/* Discord Widget Styles */
+.discord-widget {
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 280px;
+    max-width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.discord-widget:hover {
+    border-color: rgba(114, 137, 218, 0.5);
+    box-shadow: 0 12px 40px rgba(114, 137, 218, 0.2);
+}
+
+/* Discord Status Dots */
+.status-dot.discord-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #747f8d; /* Default offline */
+    animation: none;
+}
+
+/* Discord Avatar Container */
+.discord-avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.discord-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    position: relative;
+    z-index: 1;
+}
+
+/* Avatar Decoration Overlay */
+.avatar-decoration {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+    animation: decoration-glow 3s ease-in-out infinite;
+}
+
+@keyframes decoration-glow {
+    0%, 100% {
+        filter: brightness(1) saturate(1);
+    }
+    50% {
+        filter: brightness(1.1) saturate(1.2);
+    }
+}
+
+.status-dot.discord-status.online {
+    background: #43b581;
+    animation: discord-pulse 2s infinite;
+}
+
+.status-dot.discord-status.idle {
+    background: #faa61a;
+}
+
+.status-dot.discord-status.dnd {
+    background: #f04747;
+}
+
+.status-dot.discord-status.invisible {
+    background: #747f8d;
+}
+
+/* Discord Activity Styles */
+.discord-activity {
+    background: rgba(88, 101, 242, 0.1);
+    border: 1px solid rgba(88, 101, 242, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.discord-voice {
+    background: rgba(67, 181, 129, 0.1);
+    border: 1px solid rgba(67, 181, 129, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+/* Activity Progress */
+.activity-progress {
+    margin-top: 8px;
+}
+
+.activity-progress .progress-container {
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.activity-progress .progress-bar {
+    background: linear-gradient(90deg, #5865f2, #7289da);
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Discord Animations */
+@keyframes discord-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(67, 181, 129, 0);
+    }
+}
+
+/* Activity Type Icons */
+.discord-activity .activity-type {
+    color: #5865f2;
+}
+
+.discord-activity.playing .activity-type {
+    color: #43b581;
+}
+
+.discord-activity.streaming .activity-type {
+    color: #593695;
+}
+
+.discord-activity.listening .activity-type {
+    color: #1db954;
+}
+
+.discord-activity.watching .activity-type {
+    color: #f47b67;
+}
+
 /* Enhanced Bloom Effect */
 .bloom {
     filter: brightness(var(--bloom-strength)) drop-shadow(0 0 var(--bloom-radius) var(--bloom-color));
@@ -91,14 +241,6 @@
 
 #bg-fallback {
     z-index: -3;
-}
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: transparent; /* Ensure the background is transparent so the image is visible */
 }
 
 /* Rotating Location Animation */

@@ -14,8 +14,8 @@
     --background-blur: 20px;
 
     /* Typography */
-    --font-mono: 'JetBrains Mono', monospace;
-    
+    --font-mono: 'Poppins', sans-serif;
+
     /* Transitions */
     --transition-fast: 0.15s ease-out;
     --transition-base: 0.3s ease-out;
@@ -88,10 +88,30 @@ body {
 /* Profile Section */
 .profile-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0; /* Reduced from 2rem since name is no longer inside */
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.profile-info {
+    text-align: left;
+    flex: 1;
+    max-width: 300px;
+}
+
+.profile-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+    font-size: 1.5rem;
+    letter-spacing: 0.025em;
+}
+
+.profile-info h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.4;
 }
 
 .profile-image-wrapper {
@@ -99,9 +119,10 @@ body {
     width: 128px;
     height: 128px;
     border-radius: 50%;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible for decoration */
     border: 2px solid var(--color-primary);
     transition: transform var(--transition-base), box-shadow var(--transition-base);
+    flex-shrink: 0;
 }
 
 .profile-image-wrapper:hover {
@@ -109,10 +130,49 @@ body {
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
+/* Profile Discord Decoration */
+.profile-decoration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 152px;
+    height: 152px;
+    transform: translate(-50%, -50%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 2;
+    animation: profile-decoration-glow 4s ease-in-out infinite;
+}
+
+@keyframes profile-decoration-glow {
+    0%, 100% {
+        filter: brightness(1) saturate(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        filter: brightness(1.2) saturate(1.3) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        transform: translate(-50%, -50%) scale(1.02);
+    }
+}
+
+/* Enhanced styling when decoration is present */
+.profile-image-wrapper.has-decoration {
+    border: 3px solid var(--color-primary);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.profile-image-wrapper.has-decoration:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
 .profile-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%; /* Add border-radius to keep image circular */
     transition: filter var(--transition-base);
 }
 
@@ -120,18 +180,46 @@ body {
     filter: brightness(1.1);
 }
 
-h1 {
-    font-weight: 300;
-    font-size: 1.125rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.025em;
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .profile-info {
+        text-align: center;
+        max-width: none;
+    }
+    
+    .profile-image-wrapper {
+        width: 96px;
+        height: 96px;
+    }
+    
+    .profile-decoration {
+        top: 50%;
+        left: 50%;
+        width: 114px;
+        height: 114px;
+        transform: translate(-50%, -50%);
+    }
+    
+    .profile-info h2 {
+        font-size: 1.25rem;
+    }
+    
+    .profile-info h1 {
+        font-size: 0.875rem;
+    }
 }
 
 /* Dividers */
 .divider {
     width: 40px;
     height: 2px;
-    margin: 0.75rem auto;
+    margin: 1.5rem auto;
     background-color: #ffffff;
 }
 
@@ -242,10 +330,31 @@ h1 {
 }
 
 .status-dot.active {
-    background-color: var(--color-dot);
-    box-shadow: 0 0 8px var(--color-dot);
+    background-color: #43b581;
+    box-shadow: 0 0 8px #43b581;
     border-radius: 50%;
     animation: pulse 2s infinite;
+}
+
+.status-dot.idle {
+    background-color: #faa61a;
+    box-shadow: 0 0 8px #faa61a;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.dnd {
+    background-color: #f04747;
+    box-shadow: 0 0 8px #f04747;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+    background-color: #747f8d;
+    box-shadow: none;
+    border-radius: 50%;
+    animation: none;
 }
 
 .status-info {
@@ -397,4 +506,141 @@ footer {
     font-size: 0.75rem;
     width: 16px;
     text-align: center;
+}
+
+/* WebSocket Connection Indicators */
+.discord-widget::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--color-primary), transparent, var(--color-primary));
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.discord-widget.websocket-connected::before {
+    opacity: 0.3;
+    animation: websocket-pulse 3s ease-in-out infinite;
+}
+
+@keyframes websocket-pulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.02);
+    }
+}
+
+/* Connection Status Indicator */
+.connection-status {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #747f8d;
+    transition: all var(--transition-base);
+}
+
+.connection-status.websocket {
+    background-color: #43b581;
+    animation: connection-pulse 2s infinite;
+}
+
+.connection-status.http {
+    background-color: #faa61a;
+    animation: connection-blink 1s infinite;
+}
+
+.connection-status.error {
+    background-color: #f04747;
+    animation: connection-error 0.5s infinite alternate;
+}
+
+@keyframes connection-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes connection-blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes connection-error {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+/* Discord Badges Styles */
+.discord-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 12px;
+    flex-wrap: wrap;
+    vertical-align: middle;
+}
+
+.discord-badge {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    filter: brightness(1) saturate(1);
+    transition: all 0.2s ease;
+    border-radius: 0;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0;
+}
+
+.discord-badge:hover {
+    filter: brightness(1.3) saturate(1.2);
+    transform: scale(1.15);
+}
+
+/* Profile name container adjustment */
+#profile-name {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Responsive adjustments for badges */
+@media (max-width: 768px) {
+    .discord-badges {
+        gap: 4px;
+        margin-left: 8px;
+    }
+    
+    .discord-badge {
+        width: 20px;
+        height: 20px;
+    }
 }

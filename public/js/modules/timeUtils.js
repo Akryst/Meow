@@ -14,10 +14,8 @@ function initTimeDisplay() {
         }
     }
     
-    // Update immediately and then every second
     updateTime();
     setInterval(updateTime, 1000);
 }
 
-// Exportar para uso global
 window.TimeUtils = { initTimeDisplay };

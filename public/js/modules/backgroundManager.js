@@ -20,8 +20,6 @@ class BackgroundManager {
         } else {
             this.setupImageBackground();
         }
-        
-        console.log(`Background initialized: ${this.backgroundType}`);
     }
     
     setupVideoBackground() {
@@ -49,13 +47,11 @@ class BackgroundManager {
         this.createFallbackBackground();
         
         this.videoElement.onerror = () => {
-            console.warn('Video background failed to load, falling back to image');
             this.fallbackToImage();
         };
         
         this.videoElement.oncanplay = () => {
             this.videoElement.play().catch(error => {
-                console.warn('Video autoplay blocked, falling back to image');
                 this.fallbackToImage();
             });
         };
@@ -85,8 +81,6 @@ class BackgroundManager {
         });
         
         document.body.insertBefore(imageElement, document.body.firstChild);
-        
-        console.log('Image background setup completed');
     }
     
     createFallbackBackground() {

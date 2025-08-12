@@ -19,8 +19,6 @@ class VisualEffectsManager {
         this.initParticles();
         this.applyBloomEffects();
         this.setupLocationRotation();
-        
-        console.log('Visual effects initialized');
     }
     
     initParticles() {
@@ -106,8 +104,6 @@ class VisualEffectsManager {
                     },
                     retina_detect: true
                 });
-            } else {
-                console.warn('particles.js not found. Skipping particle initialization.');
             }
         }, 100);
     }
@@ -115,7 +111,6 @@ class VisualEffectsManager {
     applyBloomEffects() {
         const bloomEnabled = this.config.theme?.effects?.bloom?.enabled ?? true;
         if (!bloomEnabled) {
-            console.log('Bloom effects disabled');
             return;
         }
         

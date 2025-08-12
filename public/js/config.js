@@ -1,9 +1,9 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-11T17:16:33.335Z
+// Last updated: 2025-08-12T05:09:21.281Z
 
 const config = {
     "profile": {
-        "name": "Europhic",
+        "name": "Akryst",
         "description": "VR Enthusiast • Music Lover • Avatar editor",
         "timezone": "America/Hermosillo",
         "profileImage": "assets/images/profile.jpg"
@@ -27,8 +27,26 @@ const config = {
         ]
     },
     "lastfm": {
+        "enabled": false,
         "username": "akrystvrc",
         "apiKey": "97cee68c6a28040c6269fa02dc86a948"
+    },
+    "discord": {
+        "enabled": true,
+        "userId": "1368371401546928148",
+        "updateInterval": 5000,
+        "useWebSocket": true,
+        "showBadges": true
+    },
+    "musicPlayer": {
+        "enabled": false,
+        "volume": 50,
+        "autoplay": true,
+        "tracks": [
+            "track1.mp3",
+            "track2.mp3",
+            "track3.mp3"
+        ]
     },
     "database": {
         "enabled": false
@@ -68,8 +86,12 @@ const config = {
         "enabled": true,
         "text": "Hey! Been trying to meet you."
     },
+    "font": {
+        "family": "Poppins",
+        "weights": "300;400;500;600;700"
+    },
     "footer": {
-        "text": "Made with ❤️ by Europhic"
+        "text": "Made with ❤️ by Akryst"
     }
 };
 

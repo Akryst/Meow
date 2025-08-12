@@ -1,23 +1,29 @@
-// Page initializer - Connects configuration with HTML
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', async function() {
     const config = window.siteConfig;
     
     if (!config) {
-        console.error('Configuration not found');
         return;
     }
     
-    // Setup profile information
+
+    if (window.FontManager) {
+        const fontManager = new FontManager();
+        await fontManager.initializeFromConfig(config);
+        window.fontManager = fontManager;
+    }
+    
+
     setupProfile(config.profile);
     
-    // Setup social media links
+
     setupSocialLinks(config.socialMedia);
     
-    // Setup location rotation
+
     if (config.locations.enabled === true) {
         setupLocationRotation(config.locations);
     } else {
-        // Hide location element if disabled
+
         const locationElement = document.querySelector('.location-text');
         const locationRow = locationElement?.closest('.status-row');
         if (locationRow) {
@@ -25,56 +31,211 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Initialize background manager (image/video)
+
     if (window.BackgroundManager) {
         const backgroundManager = new BackgroundManager(config);
-        console.log('Background manager initialized');
-    } else {
-        console.warn('BackgroundManager not found');
     }
     
-    // Initialize visual effects
+
     if (window.VisualEffectsManager) {
         const effectsManager = new VisualEffectsManager(config);
-        console.log('Visual effects initialized');
-    } else {
-        console.warn('VisualEffectsManager not found');
     }
     
-    if (config.lastfm && config.lastfm.username && window.LastFmService) {
+
+    if (config.lastfm && config.lastfm.enabled && config.lastfm.username && window.LastFmService) {
         initializeLastFmWidget(config.lastfm);
-        console.log('Last.fm service initialized');
     } else {
-        console.warn('Last.fm not configured or service not found');
+
+        const lastfmWidget = document.querySelector('.lastfm-widget');
+        if (lastfmWidget) {
+            lastfmWidget.parentElement.style.display = 'none';
+        }
     }
     
-    console.log('Page initialized with custom configuration');
+
+    if (config.discord && config.discord.enabled && config.discord.userId && window.DiscordWidget) {
+        const discordWidget = new DiscordWidget(config);
+        window.discordWidget = discordWidget; // Make globally accessible for debugging
+        
+
+        discordWidget.onUserDataReceived = (userData) => {
+            // Apply decoration to profile
+            if (userData.discord_user && userData.discord_user.avatar_decoration_data) {
+                applyDiscordDecorationToProfile(userData.discord_user.avatar_decoration_data);
+            }
+            
+            // Update status in System Status panel
+            updateDiscordStatus(userData.discord_status, userData.discord_user);
+            
+            // Add Discord badges if enabled
+            if (config.discord.showBadges && userData.discord_user) {
+                addDiscordBadgesToProfile(userData.discord_user, discordWidget);
+            }
+        };
+    } else {
+
+        updateDiscordStatus('online', { username: 'System' });
+    }
+    
+
+    if (config.musicPlayer && config.musicPlayer.enabled && window.MusicPlayer) {
+        window.MusicPlayer.initMusicPlayer(config.musicPlayer);
+    } else {
+
+        const musicWidget = document.querySelector('.music-player-widget');
+        if (musicWidget) {
+            musicWidget.parentElement.style.display = 'none';
+        }
+    }
 });
 
+
+function updateDiscordStatus(status = 'offline', user = null) {
+    const statusDot = document.getElementById('discord-status-dot');
+    const statusText = document.getElementById('discord-status-text');
+    
+    if (!statusDot || !statusText) {
+        return;
+    }
+    
+
+    const statusConfig = {
+        'online': {
+            text: 'Online',
+            color: 'text-green-400',
+            dotClass: 'active',
+            dotColor: '#43b581'
+        },
+        'idle': {
+            text: 'Away',
+            color: 'text-yellow-400',
+            dotClass: 'idle',
+            dotColor: '#faa61a'
+        },
+        'dnd': {
+            text: 'Do Not Disturb',
+            color: 'text-red-400',
+            dotClass: 'dnd',
+            dotColor: '#f04747'
+        },
+        'offline': {
+            text: 'Offline',
+            color: 'text-gray-400',
+            dotClass: 'offline',
+            dotColor: '#747f8d'
+        }
+    };
+    
+    const config = statusConfig[status] || statusConfig['offline'];
+    
+
+    statusText.textContent = config.text;
+    statusText.className = `text-xs ${config.color}`;
+    
+
+    statusDot.className = `status-dot ${config.dotClass}`;
+    statusDot.style.backgroundColor = config.dotColor;
+}
+
+
+window.updateDiscordStatus = updateDiscordStatus;
+
+
+function applyDiscordDecorationToProfile(decorationData) {
+    const profileWrapper = document.querySelector('.profile-image-wrapper');
+    
+    if (!profileWrapper) {
+        return;
+    }
+    
+
+    const existingDecoration = profileWrapper.querySelector('.profile-decoration');
+    if (existingDecoration) {
+        existingDecoration.remove();
+    }
+    
+    if (!decorationData) {
+        return;
+    }
+    
+    const decoration = document.createElement('div');
+    decoration.className = 'profile-decoration';
+    
+    let decorationUrl;
+    if (decorationData.url) {
+        decorationUrl = decorationData.url;
+    } else if (decorationData.asset) {
+        decorationUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${decorationData.asset}.png?size=160`;
+    } else {
+        return;
+    }
+    
+    decoration.style.backgroundImage = `url(${decorationUrl})`;
+    decoration.style.display = 'block';
+    decoration.style.visibility = 'visible';
+    decoration.style.opacity = '1';
+    
+    profileWrapper.appendChild(decoration);
+    
+    profileWrapper.classList.add('has-decoration');
+    
+    decoration.offsetHeight;
+}
+
+
+// Make function globally available
+window.applyDiscordDecorationToProfile = applyDiscordDecorationToProfile;
+
+// Add Discord badges to profile section
+function addDiscordBadgesToProfile(user, discordWidget) {
+    const profileName = document.getElementById('profile-name');
+    if (!profileName || !discordWidget.showBadges) return;
+    
+    // Remove existing badges
+    const existingBadges = profileName.querySelector('.discord-badges');
+    if (existingBadges) {
+        existingBadges.remove();
+    }
+    
+    // Generate badges HTML
+    const badgesHTML = discordWidget.renderDiscordBadges(user);
+    if (badgesHTML) {
+        const badgeContainer = document.createElement('span');
+        badgeContainer.className = 'discord-badges';
+        badgeContainer.innerHTML = badgesHTML;
+        
+        // Insert badges directly into the profile name element (inline)
+        profileName.appendChild(badgeContainer);
+    }
+}
+
+// Make function globally available
+window.addDiscordBadgesToProfile = addDiscordBadgesToProfile;
+
 function setupProfile(profile) {
-    // Set name
+
     const nameElement = document.getElementById('profile-name');
     if (nameElement) {
         nameElement.textContent = profile.name;
     }
     
-    // Set description
+
     const descElement = document.getElementById('profile-description');
     if (descElement) {
         descElement.textContent = profile.description;
     }
     
-    // Set profile image
+
     const imgElement = document.querySelector('.profile-image');
     if (imgElement && profile.profileImage) {
         imgElement.src = profile.profileImage;
         imgElement.alt = `${profile.name} Profile`;
     }
     
-    // Update page title
+
     document.title = `${profile.name} - Bio`;
     
-    // Update Last.fm widget text
+
     const lastfmWidget = document.querySelector('.lastfm-widget .text-xs.text-gray-400.uppercase.tracking-wide');
     if (lastfmWidget) {
         lastfmWidget.textContent = `${profile.name.toUpperCase()} IS LISTENING TO`;
@@ -82,7 +243,7 @@ function setupProfile(profile) {
 }
 
 function setupSocialLinks(socialMedia) {
-    // Configure social media links
+
     const socialLinks = document.querySelectorAll('[data-social]');
     
     socialLinks.forEach(link => {
@@ -96,7 +257,6 @@ function setupSocialLinks(socialMedia) {
             link.style.display = ''; // Show
             
             link.addEventListener('mouseenter', function() {
-                console.log(`Navigating to ${platform}: ${url}`);
             });
         } else {
             link.style.display = 'none';
@@ -107,8 +267,7 @@ function setupSocialLinks(socialMedia) {
     const socialGrid = document.querySelector('.social-grid');
     if (socialGrid) {
         const visibleLinks = socialGrid.querySelectorAll('.social-icon:not([style*="display: none"])');
-        console.log(`Active social networks: ${visibleLinks.length}`);
-        
+
         socialGrid.className = `social-grid icons-${visibleLinks.length}`;
     }
 }
@@ -143,11 +302,9 @@ window.updateConfig = function(newConfig) {
     
     setupProfile(window.siteConfig.profile);
     setupSocialLinks(window.siteConfig.socialMedia);
-    
-    console.log('Configuration updated');
 };
 
-// Last.fm widget initialization
+
 async function initializeLastFmWidget(lastfmConfig) {
     const trackNameElement = document.getElementById('track-name');
     const artistNameElement = document.getElementById('artist-name');
@@ -162,7 +319,6 @@ async function initializeLastFmWidget(lastfmConfig) {
     const apiKey = window.siteConfig?.lastfm?.apiKey || '';
     if (apiKey && lastfmConfig.username) {
         lastFmService = new LastFmService(apiKey, lastfmConfig.username);
-        console.log('Last.fm API service initialized');
     } else {
         console.warn('Last.fm API key or username not configured');
         trackNameElement.textContent = 'Last.fm not configured';
@@ -195,7 +351,7 @@ async function initializeLastFmWidget(lastfmConfig) {
                 artistNameElement.textContent = 'Last.fm';
             }
         } catch (error) {
-            console.error('🎵 Failed to fetch from Last.fm:', error);
+            console.error('Failed to fetch from Last.fm:', error);
             trackNameElement.textContent = 'API Error';
             artistNameElement.textContent = 'Last.fm unavailable';
         }
@@ -204,6 +360,4 @@ async function initializeLastFmWidget(lastfmConfig) {
     await updateTrackDisplay();
     
     setInterval(updateTrackDisplay, 30000);
-    
-    console.log('Last.fm widget initialized with username:', lastfmConfig.username);
 }
