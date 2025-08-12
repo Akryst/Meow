@@ -71,7 +71,6 @@ class WelcomeScreen {
                 this.mainContent.focus();
             }
         }, 300);
-        this.trackEntry();
     }
 
     show() {

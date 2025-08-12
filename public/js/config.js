@@ -1,5 +1,5 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-12T05:09:21.281Z
+// Last updated: 2025-08-12T06:06:27.156Z
 
 const config = {
     "profile": {
@@ -39,13 +39,11 @@ const config = {
         "showBadges": true
     },
     "musicPlayer": {
-        "enabled": false,
+        "enabled": true,
         "volume": 50,
         "autoplay": true,
         "tracks": [
-            "track1.mp3",
-            "track2.mp3",
-            "track3.mp3"
+            "assets/songs/track1.mp3"
         ]
     },
     "database": {
@@ -97,5 +95,3 @@ const config = {
 
 // Make available globally
 window.siteConfig = config;
-
-console.log('🔧 Configuration loaded:', config);
