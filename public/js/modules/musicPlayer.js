@@ -4,6 +4,14 @@
  */
 
 function initMusicPlayer(config = {}) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initMusicPlayerInternal(config));
+    } else {
+        initMusicPlayerInternal(config);
+    }
+}
+
+function initMusicPlayerInternal(config = {}) {
 
     const songs = config.tracks || ['assets/songs/Song1.mp3', 'assets/songs/Song2.mp3'];
     const defaultVolume = config.volume || 10;
@@ -15,7 +23,6 @@ function initMusicPlayer(config = {}) {
     const toggleBtn = document.querySelector('.toggle-play');
     const volumeSlider = document.getElementById('volume-slider');
     let isPlaying = false;
-
 
     if (volumeSlider) {
         volumeSlider.value = defaultVolume;
@@ -75,16 +82,16 @@ function initMusicPlayer(config = {}) {
                 isPlaying = true;
             }
         };
+    } else {
+        console.error('Toggle button not found - Music player controls unavailable');
     }
 
 
     if (autoplay) {
-
         setTimeout(() => {
             loadAndPlaySong(currentSongIndex);
         }, 1000);
     }
 }
-
 
 window.MusicPlayer = { initMusicPlayer };
