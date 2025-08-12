@@ -4,11 +4,27 @@ A modern, customizable personal bio page with Discord integration, real-time mus
 
 ![Preview](image.png)
 
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/zZ9umH8Jja)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/License-Open%20Source-blue?style=for-the-badge)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/Akryst/Meow-?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Akryst/Meow)
-[![Last Commit](https://img.shields.io/github/last-commit/Akryst/Meow-?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Akryst/Meow)
+<p align="center">
+   <a href="https://bio.akryst.lol"><b>Live demo</b></a>
+</p>
+
+<p align="center">
+   <a href="https://discord.gg/zZ9umH8Jja">
+      <img src="https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" />
+   </a>
+   <a href="https://nodejs.org/">
+      <img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+   </a>
+   <a href="LICENSE">
+      <img src="https://img.shields.io/badge/License-Open%20Source-blue?style=for-the-badge" alt="License" />
+   </a>
+   <a href="https://github.com/Akryst/Meow">
+      <img src="https://img.shields.io/github/stars/Akryst/Meow-?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Stars" />
+   </a>
+   <a href="https://github.com/Akryst/Meow">
+      <img src="https://img.shields.io/github/last-commit/Akryst/Meow-?style=for-the-badge&logo=github&logoColor=white" alt="Last Commit" />
+   </a>
+</p>
 
 ## Features
 
@@ -155,7 +171,7 @@ public/
 
 **Other ways to get support:**
 - 🐛 [Report Issues](https://github.com/Akryst/Meow-/issues)
-- 💡 [Request Features](https://github.com/Akryst/Meow-/discussions)
+- 💡 [Request Features](https://discord.gg/zZ9umH8Jja)
 - ⭐ [Star the Repository](https://github.com/Akryst/Meow-)
 
 ## License
