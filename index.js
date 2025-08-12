@@ -116,10 +116,8 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`[${new Date().toISOString()}] SYSTEM BOOT COMPLETE
 
-> akryst-bio-server --port ${PORT} --mode production
-✓ MongoDB status: ${isMongoConnected ? 'CONNECTED' : 'CHECKING'}
-
-🌍 Server accessible at: http://localhost:${PORT}
+> meow-bio-server --port ${PORT} --mode production
+> Server accessible at: http://localhost:${PORT}
 
 Ready for connections...`);
 });
