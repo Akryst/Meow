@@ -5,21 +5,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!config) {
         return;
     }
-    
 
     if (window.FontManager) {
         const fontManager = new FontManager();
         await fontManager.initializeFromConfig(config);
         window.fontManager = fontManager;
     }
-    
 
     setupProfile(config.profile);
-    
 
     setupSocialLinks(config.socialMedia);
     
-
     if (config.locations.enabled === true) {
         setupLocationRotation(config.locations);
     } else {
@@ -31,17 +27,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
     
-
     if (window.BackgroundManager) {
         const backgroundManager = new BackgroundManager(config);
     }
     
-
     if (window.VisualEffectsManager) {
         const effectsManager = new VisualEffectsManager(config);
     }
     
-
     if (config.lastfm && config.lastfm.enabled && config.lastfm.username && window.LastFmService) {
         initializeLastFmWidget(config.lastfm);
     } else {
@@ -51,23 +44,18 @@ document.addEventListener('DOMContentLoaded', async function() {
             lastfmWidget.parentElement.style.display = 'none';
         }
     }
-    
 
     if (config.discord && config.discord.enabled && config.discord.userId && window.DiscordWidget) {
         const discordWidget = new DiscordWidget(config);
-        window.discordWidget = discordWidget; // Make globally accessible for debugging
-        
+        window.discordWidget = discordWidget;
 
         discordWidget.onUserDataReceived = (userData) => {
-            // Apply decoration to profile
             if (userData.discord_user && userData.discord_user.avatar_decoration_data) {
                 applyDiscordDecorationToProfile(userData.discord_user.avatar_decoration_data);
             }
             
-            // Update status in System Status panel
             updateDiscordStatus(userData.discord_status, userData.discord_user);
             
-            // Add Discord badges if enabled
             if (config.discord.showBadges && userData.discord_user) {
                 addDiscordBadgesToProfile(userData.discord_user, discordWidget);
             }
@@ -77,7 +65,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         updateDiscordStatus('online', { username: 'System' });
     }
     
-
     if (config.musicPlayer && config.musicPlayer.enabled && window.MusicPlayer) {
         window.MusicPlayer.initMusicPlayer(config.musicPlayer);
     } else {
@@ -89,7 +76,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-
 function updateDiscordStatus(status = 'offline', user = null) {
     const statusDot = document.getElementById('discord-status-dot');
     const statusText = document.getElementById('discord-status-text');
@@ -97,7 +83,6 @@ function updateDiscordStatus(status = 'offline', user = null) {
     if (!statusDot || !statusText) {
         return;
     }
-    
 
     const statusConfig = {
         'online': {
@@ -137,9 +122,7 @@ function updateDiscordStatus(status = 'offline', user = null) {
     statusDot.style.backgroundColor = config.dotColor;
 }
 
-
 window.updateDiscordStatus = updateDiscordStatus;
-
 
 function applyDiscordDecorationToProfile(decorationData) {
     const profileWrapper = document.querySelector('.profile-image-wrapper');
@@ -147,7 +130,6 @@ function applyDiscordDecorationToProfile(decorationData) {
     if (!profileWrapper) {
         return;
     }
-    
 
     const existingDecoration = profileWrapper.querySelector('.profile-decoration');
     if (existingDecoration) {
@@ -182,34 +164,27 @@ function applyDiscordDecorationToProfile(decorationData) {
     decoration.offsetHeight;
 }
 
-
-// Make function globally available
 window.applyDiscordDecorationToProfile = applyDiscordDecorationToProfile;
 
-// Add Discord badges to profile section
 function addDiscordBadgesToProfile(user, discordWidget) {
     const profileName = document.getElementById('profile-name');
     if (!profileName || !discordWidget.showBadges) return;
     
-    // Remove existing badges
     const existingBadges = profileName.querySelector('.discord-badges');
     if (existingBadges) {
         existingBadges.remove();
     }
     
-    // Generate badges HTML
     const badgesHTML = discordWidget.renderDiscordBadges(user);
     if (badgesHTML) {
         const badgeContainer = document.createElement('span');
         badgeContainer.className = 'discord-badges';
         badgeContainer.innerHTML = badgesHTML;
         
-        // Insert badges directly into the profile name element (inline)
         profileName.appendChild(badgeContainer);
     }
 }
 
-// Make function globally available
 window.addDiscordBadgesToProfile = addDiscordBadgesToProfile;
 
 function setupProfile(profile) {
@@ -232,10 +207,8 @@ function setupProfile(profile) {
         imgElement.alt = `${profile.name} Profile`;
     }
     
-
-    document.title = `${profile.name} - Bio`;
+    document.title = `${profile.name}`;
     
-
     const lastfmWidget = document.querySelector('.lastfm-widget .text-xs.text-gray-400.uppercase.tracking-wide');
     if (lastfmWidget) {
         lastfmWidget.textContent = `${profile.name.toUpperCase()} IS LISTENING TO`;
@@ -303,7 +276,6 @@ window.updateConfig = function(newConfig) {
     setupProfile(window.siteConfig.profile);
     setupSocialLinks(window.siteConfig.socialMedia);
 };
-
 
 async function initializeLastFmWidget(lastfmConfig) {
     const trackNameElement = document.getElementById('track-name');

@@ -1,5 +1,5 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-12T06:06:27.156Z
+// Last updated: 2025-08-12T13:35:09.293Z
 
 const config = {
     "profile": {
@@ -27,7 +27,7 @@ const config = {
         ]
     },
     "lastfm": {
-        "enabled": false,
+        "enabled": true,
         "username": "akrystvrc",
         "apiKey": "97cee68c6a28040c6269fa02dc86a948"
     },
@@ -51,9 +51,11 @@ const config = {
     },
     "theme": {
         "background": {
-            "type": "video",
+            "type": "image",
             "video": "assets/videos/background.mp4",
-            "image": "assets/images/background.jpg"
+            "image": "assets/images/background.jpg",
+            "blur": "5px",
+            "opacity": 0.8
         },
         "effects": {
             "bloom": {
@@ -63,7 +65,7 @@ const config = {
                 "textShadowColor": "var(--color-primary)",
                 "pulseAnimation": true
             },
-            "backgroundBlur": 20,
+            "backgroundBlur": 5,
             "locationRotation": {
                 "interval": 10000,
                 "fadeTransition": true,
@@ -95,3 +97,5 @@ const config = {
 
 // Make available globally
 window.siteConfig = config;
+
+console.log('Configuration loaded:');

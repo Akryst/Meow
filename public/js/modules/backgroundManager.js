@@ -33,6 +33,9 @@ class BackgroundManager {
         const videoSrc = this.config.theme.background.video || 'assets/videos/background.mp4';
         this.videoElement.src = videoSrc;
         
+        const blur = this.config.theme.background.blur || '20px';
+        const opacity = this.config.theme.background.opacity || 0.3;
+        
         Object.assign(this.videoElement.style, {
             position: 'fixed',
             top: '0',
@@ -41,7 +44,9 @@ class BackgroundManager {
             height: '100%',
             objectFit: 'cover',
             zIndex: '-2',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            filter: `blur(${blur})`,
+            opacity: opacity
         });
         
         this.createFallbackBackground();
@@ -64,6 +69,8 @@ class BackgroundManager {
         imageElement.id = 'bg-image';
         
         const imageSrc = this.config.theme.background.image || 'assets/images/background.jpg';
+        const blur = this.config.theme.background.blur || '20px';
+        const opacity = this.config.theme.background.opacity || 0.3;
         
         Object.assign(imageElement.style, {
             position: 'fixed',
@@ -75,9 +82,10 @@ class BackgroundManager {
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
             zIndex: '-2',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            filter: `blur(${blur})`,
+            opacity: opacity
         });
         
         document.body.insertBefore(imageElement, document.body.firstChild);
@@ -88,6 +96,8 @@ class BackgroundManager {
         this.fallbackElement.id = 'bg-fallback';
         
         const imageSrc = this.config.theme.background.image || 'assets/images/background.jpg';
+        const blur = this.config.theme.background.blur || '20px';
+        const opacity = this.config.theme.background.opacity || 0.3;
         
         Object.assign(this.fallbackElement.style, {
             position: 'fixed',
@@ -100,7 +110,9 @@ class BackgroundManager {
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
             zIndex: '-3',
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            filter: `blur(${blur})`,
+            opacity: opacity
         });
         
         document.body.insertBefore(this.fallbackElement, document.body.firstChild);
