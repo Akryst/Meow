@@ -168,7 +168,7 @@ const config = ${JSON.stringify(config, (key, value) => {
 // Make available globally
 window.siteConfig = config;
 
-console.log('🔧 Configuration loaded:', config);`;
+console.log('Configuration loaded:');`;
     
     return configContent;
 }
