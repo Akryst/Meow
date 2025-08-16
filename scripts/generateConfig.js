@@ -75,7 +75,8 @@ function generateConfigFile(env) {
             name: env.NAME || 'Your Name',
             description: env.DESCRIPTION || 'A brief description about yourself',
             timezone: env.TIMEZONE || 'Your/Timezone',
-            profileImage: 'assets/images/profile.jpg'
+            profileImage: env.PROFILE_IMAGE || 'assets/images/profile.jpg',
+            profileImageType: env.PROFILE_IMAGE_TYPE || 'jpg'
         },
         socialMedia: filterSocialMedia({
             twitter: env.TWITTER || '',

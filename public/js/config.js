@@ -1,12 +1,13 @@
 // Site configuration - Auto-generated from .env file
-// Last updated: 2025-08-12T13:35:09.293Z
+// Last updated: 2025-08-16T03:26:03.554Z
 
 const config = {
     "profile": {
         "name": "Akryst",
         "description": "VR Enthusiast • Music Lover • Avatar editor",
         "timezone": "America/Hermosillo",
-        "profileImage": "assets/images/profile.jpg"
+        "profileImage": "assets/images/profile.gif",
+        "profileImageType": "gif"
     },
     "socialMedia": {
         "twitter": "https://x.com/AkrystVRC",
@@ -39,7 +40,7 @@ const config = {
         "showBadges": true
     },
     "musicPlayer": {
-        "enabled": true,
+        "enabled": false,
         "volume": 50,
         "autoplay": true,
         "tracks": [

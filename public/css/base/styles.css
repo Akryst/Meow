@@ -30,22 +30,20 @@
 
 body {
     font-family: var(--font-mono);
-    /* Background will be handled dynamically by BackgroundManager */
-    background-color: var(--color-background); /* Fallback color */
+    background-color: var(--color-background); 
     backdrop-filter: blur(var(--background-blur));
     color: var(--color-text);
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Background overlay */
 #background-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); /* Ajusta la opacidad según sea necesario */
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: -1;
     pointer-events: none;
 }
@@ -119,7 +117,7 @@ body {
     width: 128px;
     height: 128px;
     border-radius: 50%;
-    overflow: visible; /* Changed from hidden to visible for decoration */
+    overflow: visible; 
     border: 2px solid var(--color-primary);
     transition: transform var(--transition-base), box-shadow var(--transition-base);
     flex-shrink: 0;
@@ -174,6 +172,48 @@ body {
     object-fit: cover;
     border-radius: 50%; /* Add border-radius to keep image circular */
     transition: filter var(--transition-base);
+}
+
+/* Profile image placeholder when src is empty */
+.profile-image[src=""], .profile-image:not([src]) {
+    background: linear-gradient(135deg, #333, #555);
+    position: relative;
+}
+
+.profile-image[src=""]:before, .profile-image:not([src]):before {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* GIF-specific styling */
+.profile-image-gif {
+    image-rendering: auto;
+    -webkit-image-rendering: auto;
+    image-rendering: -webkit-optimize-contrast; /* Safari */
+    image-rendering: crisp-edges; /* Fallback */
+}
+
+/* Loading states for profile image */
+.profile-image.loading {
+    opacity: 0.6;
+    filter: blur(2px);
+}
+
+.profile-image.loaded {
+    opacity: 1;
+    filter: none;
+}
+
+.profile-image.error {
+    opacity: 0.5;
+    filter: grayscale(100%);
 }
 
 .profile-image-wrapper:hover .profile-image {
