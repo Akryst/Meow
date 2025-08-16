@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     TimeUtils.initTimeDisplay();
-    MusicPlayer.initMusicPlayer();
     loadFooterConfig();
 }
 

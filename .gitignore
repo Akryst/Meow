@@ -114,3 +114,4 @@ backups/
 # Personal assets (uncomment if you don't want to share your personal files)
 examples/
 backups/
+package-lock.json

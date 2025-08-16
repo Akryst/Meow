@@ -4,6 +4,10 @@
  */
 
 function initMusicPlayer(config = {}) {
+    if (config.enabled === false) {
+        return;
+    }
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initMusicPlayerInternal(config));
     } else {
