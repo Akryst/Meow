@@ -138,11 +138,6 @@ BLOOM_PULSE_ANIMATION=true
 # Fonts
 FONT_FAMILY=Poppins
 FONT_WEIGHTS=300;400;500;600;700
-
-# Database (optional)
-MONGO_ENABLED=false
-MONGO_URI=mongodb://localhost:27017/yourdatabase
-DATABASE_NAME=yourdatabase
 ```
 
 ## File Structure

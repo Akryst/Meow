@@ -113,9 +113,6 @@ function generateConfigFile(env) {
             autoplay: env.MUSIC_PLAYER_AUTOPLAY !== undefined ? JSON.parse(env.MUSIC_PLAYER_AUTOPLAY) : false,
             tracks: env.MUSIC_PLAYER_TRACKS || ['assets/songs/Song1.mp3', 'assets/songs/Song2.mp3']
         },
-        database: {
-            enabled: env.MONGO_ENABLED || false
-        },
         theme: {
             background: {
                 type: env.BACKGROUND_TYPE || 'image',
