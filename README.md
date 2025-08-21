@@ -3,6 +3,7 @@
 A modern, customizable personal bio page with Discord integration, real-time music display, and dynamic backgrounds.
 
 ![Preview](image.png)
+![Preview](image2.png)
 
 <p align="center">
    <a href="https://bio.akryst.lol"><b>Live demo</b></a>
