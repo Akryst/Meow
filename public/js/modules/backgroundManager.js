@@ -29,6 +29,8 @@ class BackgroundManager {
         this.videoElement.muted = true;
         this.videoElement.loop = true;
         this.videoElement.playsInline = true;
+        this.videoElement.preload = 'metadata';
+        this.videoElement.setAttribute('webkit-playsinline', 'true');
         
         const videoSrc = this.config.theme.background.video || 'assets/videos/background.mp4';
         this.videoElement.src = videoSrc;
@@ -40,13 +42,16 @@ class BackgroundManager {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100%',
-            height: '100%',
+            width: '100vw',
+            height: '100vh',
             objectFit: 'cover',
             zIndex: '-2',
             pointerEvents: 'none',
             filter: `blur(${blur})`,
-            opacity: opacity
+            opacity: opacity,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+            willChange: 'opacity'
         });
         
         this.createFallbackBackground();
@@ -56,7 +61,11 @@ class BackgroundManager {
         };
         
         this.videoElement.oncanplay = () => {
-            this.videoElement.play().catch(error => {
+            this.videoElement.style.opacity = '0';
+            this.videoElement.play().then(() => {
+                this.videoElement.style.transition = 'opacity 0.5s ease';
+                this.videoElement.style.opacity = opacity;
+            }).catch(error => {
                 this.fallbackToImage();
             });
         };
@@ -76,8 +85,8 @@ class BackgroundManager {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100%',
-            height: '100%',
+            width: '100vw',
+            height: '100vh',
             backgroundImage: `url('${imageSrc}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
@@ -85,7 +94,9 @@ class BackgroundManager {
             zIndex: '-2',
             pointerEvents: 'none',
             filter: `blur(${blur})`,
-            opacity: opacity
+            opacity: opacity,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
         });
         
         document.body.insertBefore(imageElement, document.body.firstChild);
@@ -103,8 +114,8 @@ class BackgroundManager {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100%',
-            height: '100%',
+            width: '100vw',
+            height: '100vh',
             backgroundImage: `url('${imageSrc}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
@@ -112,7 +123,9 @@ class BackgroundManager {
             zIndex: '-3',
             pointerEvents: 'none',
             filter: `blur(${blur})`,
-            opacity: opacity
+            opacity: opacity,
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden'
         });
         
         document.body.insertBefore(this.fallbackElement, document.body.firstChild);

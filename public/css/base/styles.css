@@ -35,6 +35,8 @@ body {
     color: var(--color-text);
     line-height: 1.6;
     overflow-x: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 #background-overlay {
@@ -146,24 +148,22 @@ body {
 
 @keyframes profile-decoration-glow {
     0%, 100% {
-        filter: brightness(1) saturate(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1) saturate(1);
+        transform: translate(-50%, -50%);
     }
     50% {
-        filter: brightness(1.2) saturate(1.3) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
-        transform: translate(-50%, -50%) scale(1.02);
+        filter: brightness(1.1) saturate(1.1);
+        transform: translate(-50%, -50%);
     }
 }
 
 /* Enhanced styling when decoration is present */
 .profile-image-wrapper.has-decoration {
     border: 3px solid var(--color-primary);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .profile-image-wrapper.has-decoration:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    transform: scale(1.03);
 }
 
 .profile-image {
@@ -571,11 +571,9 @@ footer {
 @keyframes websocket-pulse {
     0%, 100% {
         opacity: 0.3;
-        transform: scale(1);
     }
     50% {
-        opacity: 0.6;
-        transform: scale(1.02);
+        opacity: 0.5;
     }
 }
 
@@ -609,11 +607,9 @@ footer {
 @keyframes connection-pulse {
     0%, 100% {
         opacity: 1;
-        transform: scale(1);
     }
     50% {
         opacity: 0.6;
-        transform: scale(1.2);
     }
 }
 
@@ -682,5 +678,53 @@ footer {
     .discord-badge {
         width: 20px;
         height: 20px;
+    }
+}
+
+/* Performance Optimizations */
+* {
+    will-change: auto;
+}
+
+video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.profile-image-wrapper,
+.discord-widget,
+.lastfm-widget,
+.music-player-widget {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.profile-decoration {
+    transform: translate(-50%, -50%) translateZ(0);
+    backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .profile-decoration {
+        animation: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-decoration {
+        animation-duration: 6s;
+    }
+    
+    .discord-widget::before {
+        animation-duration: 4s;
     }
 }
