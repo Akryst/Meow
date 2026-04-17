@@ -24,9 +24,17 @@ npm start
 
 **3. Open the setup wizard**
 
-Visit `http://localhost:3000/setup` and fill in your info — name, description, social links, Discord, Last.fm, profile image, and background.
+Visit `http://localhost:3000/setup`. The wizard walks you through 5 steps:
 
-The wizard saves everything and locks itself after the first run. To reconfigure, delete `.setup-complete` and restart.
+| Step | What you configure |
+|---|---|
+| ① Profile | Display name, description, timezone, footer text, welcome message, profile picture |
+| ② Social | GitHub, Twitter/X, Steam, VRChat, osu!, Last.fm, Instagram, TikTok, YouTube, NameMC |
+| ③ Integrations | Discord status (via Lanyard), Last.fm now playing, rotating locations |
+| ④ Appearance | Background image or video, blur/opacity overlay, font family |
+| ⑤ Finish | Review summary → click **Launch** |
+
+On submit, the wizard writes your `.env`, generates `config.js`, saves your uploaded images, and permanently locks itself. To reconfigure, delete `.setup-complete` and restart.
 
 **4. Done**
 
