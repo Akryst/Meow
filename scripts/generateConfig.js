@@ -1,50 +1,34 @@
 const fs = require('fs');
 const path = require('path');
 
-
 function parseEnvFile(filePath) {
     try {
-        const envContent = fs.readFileSync(filePath, 'utf8');
         const env = {};
-        
-        envContent.split('\n').forEach(line => {
+        fs.readFileSync(filePath, 'utf8').split('\n').forEach(line => {
             line = line.trim();
-            if (line && !line.startsWith('#') && line.includes('=')) {
-                const [key, ...valueParts] = line.split('=');
-                let value = valueParts.join('=').trim();
-                
+            if (!line || line.startsWith('#') || !line.includes('=')) return;
+            const [key, ...valueParts] = line.split('=');
+            let value = valueParts.join('=').trim();
 
-                if ((value.startsWith('"') && value.endsWith('"')) || 
-                    (value.startsWith("'") && value.endsWith("'"))) {
-                    value = value.slice(1, -1);
-                }
-                
-
-                if (value.startsWith('[') && value.endsWith(']')) {
-                    try {
-                        value = JSON.parse(value);
-                    } catch (e) {
-
-                    }
-                }
-                
-
-                if (value === 'true') value = true;
-                if (value === 'false') value = false;
-                
-
-                if (typeof value !== 'boolean' && 
-                    !isNaN(value) && 
-                    value !== '' && 
-                    key !== 'DISCORD_USER_ID') { // Keep Discord ID as string
-                    const num = Number(value);
-                    if (Number.isInteger(num)) value = num;
-                }
-                
-                env[key] = value;
+            if ((value.startsWith('"') && value.endsWith('"')) ||
+                (value.startsWith("'") && value.endsWith("'"))) {
+                value = value.slice(1, -1);
             }
+
+            if (value.startsWith('[') && value.endsWith(']')) {
+                try { value = JSON.parse(value); } catch (e) {}
+            }
+
+            if (value === 'true') value = true;
+            if (value === 'false') value = false;
+
+            if (typeof value !== 'boolean' && !isNaN(value) && value !== '' && key !== 'DISCORD_USER_ID') {
+                const num = Number(value);
+                if (Number.isInteger(num)) value = num;
+            }
+
+            env[key] = value;
         });
-        
         return env;
     } catch (error) {
         console.error('Error reading .env file:', error);
@@ -52,18 +36,12 @@ function parseEnvFile(filePath) {
     }
 }
 
-
 function generateConfigFile(env) {
-
     const filterSocialMedia = (socialUrls) => {
         const filtered = {};
         Object.keys(socialUrls).forEach(key => {
             const value = socialUrls[key];
-
-            if (value && 
-                value.toLowerCase() !== 'off' && 
-                value !== '' && 
-                !value.includes('yourprofile')) {
+            if (value && value.toLowerCase() !== 'off' && value !== '' && !value.includes('yourprofile')) {
                 filtered[key] = value;
             }
         });
@@ -102,7 +80,7 @@ function generateConfigFile(env) {
         },
         discord: {
             enabled: env.DISCORD_ENABLED !== undefined ? JSON.parse(env.DISCORD_ENABLED) : true,
-            userId: env.DISCORD_USER_ID || '', // Keep as string to preserve large numbers
+            userId: env.DISCORD_USER_ID || '',
             updateInterval: parseInt(env.DISCORD_UPDATE_INTERVAL) || 15000,
             useWebSocket: env.DISCORD_USE_WEBSOCKET !== undefined ? JSON.parse(env.DISCORD_USE_WEBSOCKET) : true,
             showBadges: env.DISCORD_SHOW_BADGES !== undefined ? env.DISCORD_SHOW_BADGES : true
@@ -154,52 +132,26 @@ function generateConfigFile(env) {
         }
     };
     
-    const configContent = `// Site configuration - Auto-generated from .env file
-// Last updated: ${new Date().toISOString()}
+    const configContent = `// Auto-generated from .env — do not edit manually
 
-const config = ${JSON.stringify(config, (key, value) => {
+const config = ${JSON.stringify(config, null, 4)};
 
-    if (key === 'userId' && typeof value === 'string' && value.length > 15) {
-        return value;
-    }
-    return value;
-}, 4)};
-
-// Make available globally
 window.siteConfig = config;
-
-console.log('Configuration loaded:');`;
-    
+`;
     return configContent;
 }
-
 
 function main() {
     const envPath = path.join(__dirname, '..', '.env');
     const configPath = path.join(__dirname, '..', 'public', 'js', 'config.js');
-    
-    console.log('Reading .env file...');
     const env = parseEnvFile(envPath);
-    
-    console.log('Generating config.js...');
     const configContent = generateConfigFile(env);
-    
-
     const configDir = path.dirname(configPath);
-    if (!fs.existsSync(configDir)) {
-        fs.mkdirSync(configDir, { recursive: true });
-    }
-    
-
+    if (!fs.existsSync(configDir)) fs.mkdirSync(configDir, { recursive: true });
     fs.writeFileSync(configPath, configContent, 'utf8');
-    
-    console.log('config.js file generated successfully!');
-    console.log('Location:', configPath);
+    console.log('config.js generated successfully.');
 }
 
-
-if (require.main === module) {
-    main();
-}
+if (require.main === module) main();
 
 module.exports = { parseEnvFile, generateConfigFile, main };

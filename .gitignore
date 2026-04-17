@@ -99,6 +99,15 @@ Thumbs.db
 *.swo
 *~
 
+# Meow — generated & user-specific files
+.setup-complete
+public/js/config.js
+public/assets/images/profile.*
+public/assets/images/background.*
+public/assets/songs/
+public/assets/videos/
+
+
 # Logs
 logs
 *.log
