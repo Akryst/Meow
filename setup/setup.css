@@ -32,7 +32,6 @@ body {
   max-width: 680px;
 }
 
-/* ── Header ── */
 header {
   text-align: center;
   margin-bottom: 48px;
@@ -50,7 +49,6 @@ header p {
   font-weight: 300;
 }
 
-/* ── Divider ── */
 .divider {
   width: 40px;
   height: 2px;
@@ -58,7 +56,6 @@ header p {
   background: var(--color-primary);
 }
 
-/* ── Steps nav ── */
 .steps {
   display: flex;
   margin-bottom: 40px;
@@ -84,7 +81,6 @@ header p {
 }
 .step-tab.done { color: var(--color-success); }
 
-/* ── Panels ── */
 .panel { display: none; }
 .panel.active { display: block; }
 
@@ -99,7 +95,6 @@ header p {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* ── Fields ── */
 .field-group { margin-bottom: 28px; }
 .field { margin-bottom: 16px; }
 
@@ -146,7 +141,6 @@ select option { background: #111; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 500px) { .row { grid-template-columns: 1fr; } }
 
-/* ── Toggle switch ── */
 .toggle-row {
   display: flex;
   align-items: center;
@@ -191,7 +185,6 @@ select option { background: #111; }
   background: var(--color-primary);
 }
 
-/* ── Image upload ── */
 .upload-box {
   background: var(--color-surface);
   border: 1px dashed var(--color-border);
@@ -232,7 +225,6 @@ select option { background: #111; }
   height: 120px;
 }
 
-/* ── Status panel (review box) ── */
 #review-box {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -246,7 +238,6 @@ select option { background: #111; }
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
-/* ── Buttons ── */
 .nav-row {
   display: flex;
   justify-content: space-between;
@@ -289,7 +280,6 @@ select option { background: #111; }
 }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ── Submit overlay ── */
 #overlay {
   display: none;
   position: fixed; inset: 0;
@@ -314,7 +304,6 @@ select option { background: #111; }
 #overlay p  { color: var(--color-text-secondary); font-size: 0.875rem; font-weight: 300; }
 #overlay h2 { font-size: 1.4rem; font-weight: 500; }
 
-/* ── Error box ── */
 .error-box {
   background: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.3);
@@ -327,11 +316,9 @@ select option { background: #111; }
   font-weight: 300;
 }
 
-/* ── Links ── */
 a { color: var(--color-text-secondary); text-decoration: underline; transition: color var(--transition-base); }
 a:hover { color: var(--color-primary); }
 
-/* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
