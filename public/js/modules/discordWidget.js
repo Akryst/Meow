@@ -239,7 +239,6 @@ class DiscordWidget {
         }
     }
     
-    // Render Discord badges with official icons
     renderDiscordBadges(user) {
         if (!this.showBadges || !user) return '';
         
