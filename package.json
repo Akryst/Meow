@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "config": "node scripts/generateConfig.js",
-    "serve": "npx live-server public --port=3000 --open=/index.html"
+    "serve": "npx live-server public --port=3000 --open=/index.html",
+    "release": "node scripts/release.js"
   },
   "keywords": [
     "bio-page",

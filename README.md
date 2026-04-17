@@ -17,58 +17,32 @@ A customizable personal bio page with Discord integration, Last.fm, music player
 npm install
 ```
 
-**2. Configure your `.env`**
-
-Rename `.env.example` to `.env` and fill in your info:
-```env
-# Required
-NAME=Your Name
-DESCRIPTION=Your description here
-TIMEZONE=America/New_York
-FOOTER=Made with ❤️ by You
-
-# Social links (set to 'off' to hide)
-GITHUB=https://github.com/username
-TWITTER=https://x.com/username
-STEAM=https://steamcommunity.com/id/username
-INSTAGRAM=off
-
-# Discord (join discord.gg/lanyard first, then paste your user ID)
-DISCORD_ENABLED=true
-DISCORD_USER_ID=your_discord_user_id
-
-# Last.fm (get your API key at last.fm/api/account/create)
-LASTFM_ENABLED=true
-LASTFM_API_KEY=your_api_key
-LASTFM_USERNAME=your_username
-```
-
-After editing, regenerate the config:
-```bash
-npm run config
-```
-
-**3. Add your images**
-
-Drop your files into `public/assets/images/`:
-- `profile.jpg` — your profile picture (jpg, png, gif, webp supported)
-- `background.jpg` — background image
-
-For a video background, put it in `public/assets/videos/background.mp4` and set `BACKGROUND_TYPE=video` in your `.env`.
-
-**4. Run it**
+**2. Run the server**
 ```bash
 npm start
 ```
 
-The site will be available at `http://localhost:3000`.
+**3. Open the setup wizard**
+
+Visit `http://localhost:3000/setup` and fill in your info — name, description, social links, Discord, Last.fm, profile image, and background.
+
+The wizard saves everything and locks itself after the first run. To reconfigure, delete `.setup-complete` and restart.
+
+**4. Done**
+
+Your page is live at `http://localhost:3000`.
+
+---
+
+> **Migrating from a previous version?** Rename `.env.example` to `.env`, fill it in manually, then run `npm run config` to generate `public/js/config.js` without going through the wizard.
 
 ## Commands
 
 | Command | Description |
 |---|---|
 | `npm start` | Start the server |
-| `npm run config` | Regenerate config from `.env` |
+| `npm run config` | Regenerate `config.js` from `.env` |
+| `npm run release` | Create a release `.zip` (uses `git archive`) |
 | `npm run serve` | Serve static files only |
 
 ## License

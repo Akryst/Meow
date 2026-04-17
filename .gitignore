@@ -106,6 +106,8 @@ public/assets/images/profile.*
 public/assets/images/background.*
 public/assets/songs/
 public/assets/videos/
+scripts/release.js
+*.zip
 
 
 # Logs
